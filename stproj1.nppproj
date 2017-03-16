@@ -65,11 +65,8 @@
                 <File name="lib\CMSIS\startup_stm32f10x_md.S" />
                 <File name="lib\CMSIS\stm32f10x.h" />
                 <File name="lib\CMSIS\stm32f10x_conf.h" />
-                <File name="lib\CMSIS\stm32f10x_it.c" />
-                <File name="lib\CMSIS\stm32f10x_it.h" />
                 <File name="lib\CMSIS\system_stm32f10x.c" />
                 <File name="lib\CMSIS\system_stm32f10x.h" />
-                <File name="lib\CMSIS\syscalls.c" />
             </Folder>
         </Folder>
     </Project>
