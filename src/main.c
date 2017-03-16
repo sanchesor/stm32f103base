@@ -18,17 +18,6 @@ void delay_ms(int ms)
 	while(timer_ms) {};
 }
 
-void simple_delay(int delay)
-{
-	for(int i=0;i<=4000;i++)
-	{
-		for(int j=delay;j>0;j--)
-		{
-
-		}
-	}
-}
-
 void init_pin13()
 {
 	GPIO_InitTypeDef gpio;
