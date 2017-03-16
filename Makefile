@@ -18,8 +18,8 @@ CMSIS_SRC_DIR = lib\CMSIS
 
  
 INCLUDES = -Ilib\CMSIS -Ilib\STM32F10x_StdPeriph_Driver\inc
-CFLAGS  = -c -fno-common -O0 -g -mcpu=cortex-m3 -mthumb -mfloat-abi=soft
-LFLAGS  = -nostartfiles -T$(LKR_SCRIPT)
+CFLAGS  = -c -fno-common -Wall -O0 -g -mcpu=cortex-m3 -mthumb -mfloat-abi=soft
+LFLAGS  = -T$(LKR_SCRIPT) --gc-sections
 CPFLAGS = -Obinary
 SYSTEM_LIBS = -L"C:\Program Files\SysGCC\arm-eabi\arm-eabi\lib" -L"C:\Program Files\SysGCC\arm-eabi\lib\gcc\arm-eabi\5.2.0"
 
@@ -27,6 +27,7 @@ SYSTEM_LIBS = -L"C:\Program Files\SysGCC\arm-eabi\arm-eabi\lib" -L"C:\Program Fi
 LIB_OBJS = \
 bin\startup_stm32f10x_md.o \
 bin\system_stm32f10x.o \
+bin\stm32f10x_it.o \
 bin\syscalls.o \
 lib\STM32F10x_StdPeriph_Driver\bin\stm32f10x_gpio.o \
 lib\STM32F10x_StdPeriph_Driver\bin\stm32f10x_rcc.o \
@@ -48,9 +49,10 @@ $(BIN_DIR)\startup_stm32f10x_md.o: $(CMSIS_SRC_DIR)\startup_stm32f10x_md.S
 	$(CC) $(CFLAGS) $(INCLUDES) $(MACRO_DEFS) -o $(BIN_DIR)\startup_stm32f10x_md.o $(CMSIS_SRC_DIR)\startup_stm32f10x_md.S
 $(BIN_DIR)\system_stm32f10x.o: $(CMSIS_SRC_DIR)\system_stm32f10x.c
 	$(CC) $(CFLAGS) $(INCLUDES) $(MACRO_DEFS) -o $(BIN_DIR)\system_stm32f10x.o $(CMSIS_SRC_DIR)\system_stm32f10x.c
+$(BIN_DIR)\stm32f10x_it.o: $(CMSIS_SRC_DIR)\stm32f10x_it.c
+	$(CC) $(CFLAGS) $(INCLUDES) $(MACRO_DEFS) -o $(BIN_DIR)\stm32f10x_it.o $(CMSIS_SRC_DIR)\stm32f10x_it.c
 $(BIN_DIR)\syscalls.o: $(CMSIS_SRC_DIR)\syscalls.c
-	$(CC) $(CFLAGS) $(INCLUDES) $(MACRO_DEFS) -o $(BIN_DIR)\syscalls.o $(CMSIS_SRC_DIR)\syscalls.c
-	
+	$(CC) $(CFLAGS) $(INCLUDES) $(MACRO_DEFS) -o $(BIN_DIR)\syscalls.o $(CMSIS_SRC_DIR)\syscalls.c	
 
 $(LIB_BIN_DIR)\stm32f10x_rcc.o: $(LIB_SRC_DIR)\stm32f10x_rcc.c
 	$(CC) $(CFLAGS) $(INCLUDES) $(MACRO_DEFS) -o $(LIB_BIN_DIR)\stm32f10x_rcc.o $(LIB_SRC_DIR)\stm32f10x_rcc.c
