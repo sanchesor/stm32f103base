@@ -1,11 +1,9 @@
 ##################################
-# stm32 minimal example Makefile
+# stm32 (stm32f103c8t6) minimal example Makefile 
 ##################################
 
 
-
 CC = arm-eabi-gcc
-LD = arm-eabi-ld
 CP = arm-eabi-objcopy
  
 LKR_SCRIPT = LinkerScript.ld
