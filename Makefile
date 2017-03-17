@@ -16,8 +16,10 @@ CMSIS_SRC_DIR = lib\CMSIS
 
 MACRO_DEFS = -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER 
 INCLUDES = -Ilib\CMSIS -Ilib\STM32F10x_StdPeriph_Driver\inc
-CFLAGS  = -c -fno-common -Wall -O0 -g -mcpu=cortex-m3 -mthumb -mfloat-abi=soft 
-LFLAGS  = -T$(LKR_SCRIPT) -Wl,--gc-sections
+#CFLAGS  = -c -fno-common -Wall -O0 -g -mcpu=cortex-m3 -mthumb -mfloat-abi=soft 
+CFLAGS = -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -DSTM32F1 -DNUCLEO_F103RB -DSTM32F103RBTx -DSTM32 -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD -O3 -Wall -fmessage-length=0 -ffunction-sections -c
+#LFLAGS = -T$(LKR_SCRIPT) -Wl,--gc-sections
+LFLAGS = -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -T$(LKR_SCRIPT) -Wl,--gc-sections -lm
 CPFLAGS = -Obinary
 SYSTEM_LIBS = -L"C:\Program Files\SysGCC\arm-eabi\arm-eabi\lib" -L"C:\Program Files\SysGCC\arm-eabi\lib\gcc\arm-eabi\5.2.0"
 
@@ -37,6 +39,7 @@ $(BIN_DIR)\main.o: $(SRC_DIR)\main.c
 	
 $(BIN_DIR)\main.elf: $(BIN_DIR)\main.o $(LIB_OBJS)
 	$(CC) $(LFLAGS) -o $(BIN_DIR)\main.elf $(BIN_DIR)\main.o $(LIB_OBJS)  
+	
  
 $(BIN_DIR)\main.bin: $(BIN_DIR)\main.elf
 	$(CP) $(CPFLAGS) $(BIN_DIR)\main.elf $(BIN_DIR)\main.bin
