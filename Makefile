@@ -27,6 +27,7 @@ bin\system_stm32f10x.o \
 lib\STM32F10x_StdPeriph_Driver\bin\stm32f10x_gpio.o \
 lib\STM32F10x_StdPeriph_Driver\bin\stm32f10x_rcc.o \
 lib\STM32F10x_StdPeriph_Driver\bin\stm32f10x_usart.o \
+bin\libusart.o
 
 
  
@@ -36,23 +37,24 @@ $(BIN_DIR)\main.elf: $(BIN_DIR)\main.o $(LIB_OBJS)
 	$(CC) $(LFLAGS) -o $(BIN_DIR)\main.elf $(BIN_DIR)\main.o $(LIB_OBJS)  
  
 $(BIN_DIR)\main.o: $(SRC_DIR)\main.c 
-	$(CC) $(CFLAGS) $(INCLUDES)  -o $(BIN_DIR)\main.o $(SRC_DIR)\main.c 
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN_DIR)\main.o $(SRC_DIR)\main.c 
 
-	
+$(BIN_DIR)\libusart.o: $(SRC_DIR)\libusart.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN_DIR)\libusart.o $(SRC_DIR)\libusart.c
 	
 $(BIN_DIR)\startup_stm32f10x_md.o: $(CMSIS_SRC_DIR)\startup_stm32f10x_md.S
-	$(CC) $(CFLAGS) $(INCLUDES)  -o $(BIN_DIR)\startup_stm32f10x_md.o $(CMSIS_SRC_DIR)\startup_stm32f10x_md.S
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN_DIR)\startup_stm32f10x_md.o $(CMSIS_SRC_DIR)\startup_stm32f10x_md.S
 $(BIN_DIR)\system_stm32f10x.o: $(CMSIS_SRC_DIR)\system_stm32f10x.c
-	$(CC) $(CFLAGS) $(INCLUDES)  -o $(BIN_DIR)\system_stm32f10x.o $(CMSIS_SRC_DIR)\system_stm32f10x.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN_DIR)\system_stm32f10x.o $(CMSIS_SRC_DIR)\system_stm32f10x.c
 
 
 
 $(LIB_BIN_DIR)\stm32f10x_rcc.o: $(LIB_SRC_DIR)\stm32f10x_rcc.c
-	$(CC) $(CFLAGS) $(INCLUDES)  -o $(LIB_BIN_DIR)\stm32f10x_rcc.o $(LIB_SRC_DIR)\stm32f10x_rcc.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(LIB_BIN_DIR)\stm32f10x_rcc.o $(LIB_SRC_DIR)\stm32f10x_rcc.c
 $(LIB_BIN_DIR)\stm32f10x_gpio.o: $(LIB_SRC_DIR)\stm32f10x_gpio.c
-	$(CC) $(CFLAGS) $(INCLUDES)  -o $(LIB_BIN_DIR)\stm32f10x_gpio.o $(LIB_SRC_DIR)\stm32f10x_gpio.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(LIB_BIN_DIR)\stm32f10x_gpio.o $(LIB_SRC_DIR)\stm32f10x_gpio.c
 $(LIB_BIN_DIR)\stm32f10x_usart.o: $(LIB_SRC_DIR)\stm32f10x_usart.c
-	$(CC) $(CFLAGS) $(INCLUDES)  -o $(LIB_BIN_DIR)\stm32f10x_usart.o $(LIB_SRC_DIR)\stm32f10x_usart.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(LIB_BIN_DIR)\stm32f10x_usart.o $(LIB_SRC_DIR)\stm32f10x_usart.c
 
 	
 clean:
