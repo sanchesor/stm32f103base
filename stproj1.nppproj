@@ -1,5 +1,5 @@
 <NotepadPlus>
-    <Project name="stproj1">
+    <Project name="stproj2">
         <File name="LinkerScript.ld" />
         <File name="Makefile" />
         <Folder name="src">

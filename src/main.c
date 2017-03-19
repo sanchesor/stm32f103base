@@ -1,6 +1,4 @@
-
 #include "stm32f10x.h"
-
 
 volatile uint32_t timer_ms = 0;
 
@@ -18,51 +16,62 @@ void delay_ms(int ms)
 	while(timer_ms) {};
 }
 
-void init_pin13()
+
+void init_usart()
 {
-	GPIO_InitTypeDef gpio;
-
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-
-	GPIO_StructInit(&gpio);
-	gpio.GPIO_Pin = GPIO_Pin_13;
-	gpio.GPIO_Mode = GPIO_Mode_Out_PP;
-	GPIO_Init(GPIOC, &gpio);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+	
+	GPIO_InitTypeDef gpio_conf;
+	GPIO_StructInit(&gpio_conf);
+	
+	// TX
+	gpio_conf.GPIO_Pin = GPIO_Pin_9;
+	gpio_conf.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_Init(GPIOA, &gpio_conf);
+	
+	// RX
+	gpio_conf.GPIO_Pin = GPIO_Pin_10;
+	gpio_conf.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	GPIO_Init(GPIOA, &gpio_conf);
+	
+	USART_InitTypeDef usart_conf;
+	USART_StructInit(&usart_conf);
+	usart_conf.USART_BaudRate = 115200;
+	USART_Init(USART1, &usart_conf);
+	USART_Cmd(USART1, ENABLE);
 }
 
-void blink13(int delay)
+void send_char(char c)
 {
-	GPIO_SetBits(GPIOC, GPIO_Pin_13);
-	delay_ms(delay);
-	GPIO_ResetBits(GPIOC, GPIO_Pin_13);
-	delay_ms(delay);
+	while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+	
+	USART_SendData(USART1, c);
 }
 
-void blink_sos()
+void send_string(char* str)
 {
-	blink13(200);
-	blink13(200);
-	blink13(200);
-	blink13(500);
-	blink13(500);
-	blink13(500);
+	while(*str)
+		send_char(*str++);		
+}
+
+char receive_char()
+{
+	while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET);
+	
+	return USART_ReceiveData(USART1);		
 }
 
 int main(void)
 {
-	init_pin13();
-	SysTick_Config(64000);
-
+	init_usart();
+	SysTick_Config(64000);	
+	
 	for(;;)
 	{
-		/*
-		for(int i=300; i>10; i-=30)
-			blink13(i);
-		for(int i=10; i<300; i+=30)
-			blink13(i);
-		*/
-		
-		blink_sos();
-
+		send_string("napis z arma\r\n");
+		delay_ms(200);
 	}
 }

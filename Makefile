@@ -26,6 +26,7 @@ bin\startup_stm32f10x_md.o \
 bin\system_stm32f10x.o \
 lib\STM32F10x_StdPeriph_Driver\bin\stm32f10x_gpio.o \
 lib\STM32F10x_StdPeriph_Driver\bin\stm32f10x_rcc.o \
+lib\STM32F10x_StdPeriph_Driver\bin\stm32f10x_usart.o \
 
 
  
@@ -50,6 +51,8 @@ $(LIB_BIN_DIR)\stm32f10x_rcc.o: $(LIB_SRC_DIR)\stm32f10x_rcc.c
 	$(CC) $(CFLAGS) $(INCLUDES)  -o $(LIB_BIN_DIR)\stm32f10x_rcc.o $(LIB_SRC_DIR)\stm32f10x_rcc.c
 $(LIB_BIN_DIR)\stm32f10x_gpio.o: $(LIB_SRC_DIR)\stm32f10x_gpio.c
 	$(CC) $(CFLAGS) $(INCLUDES)  -o $(LIB_BIN_DIR)\stm32f10x_gpio.o $(LIB_SRC_DIR)\stm32f10x_gpio.c
+$(LIB_BIN_DIR)\stm32f10x_usart.o: $(LIB_SRC_DIR)\stm32f10x_usart.c
+	$(CC) $(CFLAGS) $(INCLUDES)  -o $(LIB_BIN_DIR)\stm32f10x_usart.o $(LIB_SRC_DIR)\stm32f10x_usart.c
 
 	
 clean:
