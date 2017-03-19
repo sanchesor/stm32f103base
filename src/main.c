@@ -38,6 +38,16 @@ void blink13(int delay)
 	delay_ms(delay);
 }
 
+void blink_sos()
+{
+	blink13(200);
+	blink13(200);
+	blink13(200);
+	blink13(500);
+	blink13(500);
+	blink13(500);
+}
+
 int main(void)
 {
 	init_pin13();
@@ -45,10 +55,14 @@ int main(void)
 
 	for(;;)
 	{
+		/*
 		for(int i=300; i>10; i-=30)
 			blink13(i);
 		for(int i=10; i<300; i+=30)
 			blink13(i);
+		*/
+		
+		blink_sos();
 
 	}
 }
