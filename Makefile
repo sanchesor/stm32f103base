@@ -60,6 +60,11 @@ clean:
  
 
 	
+
+# !!
+#Configuration files and scripts are searched for in
+# any search dir specified on the command line using the -s option,
+	
 IMAGE = bin\\main.elf
 OPENOCD_DIR = C:\Program Files\OpenOCD-20160901\bin
 install: 
