@@ -70,6 +70,7 @@ clean:
  
 
 	
+
 IMAGE = $(BIN_DIR)\\main.elf
 OPENOCD_DIR = C:\Program Files\OpenOCD-20160901\bin
 OPENOCD_SCRIPTS = -s "C:\Program Files\OpenOCD-20160901\tcl" -s "C:\Program Files\OpenOCD-20160901\tcl\interface"
