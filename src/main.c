@@ -18,13 +18,13 @@ void delay_ms(int ms)
 	while(timer_ms) {};
 }
 
-void init_pin13()
+void init_pin13() 
 {
 	GPIO_InitTypeDef gpio;
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 
-	GPIO_StructInit(&gpio);
+	GPIO_StructInit(&gpio); 
 	gpio.GPIO_Pin = GPIO_Pin_13;
 	gpio.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOC, &gpio);
@@ -40,12 +40,13 @@ void blink13(int delay)
 
 void blink_sos()
 {
-	blink13(200);
-	blink13(200);
-	blink13(200);
 	blink13(500);
 	blink13(500);
 	blink13(500);
+	
+	blink13(200);
+	blink13(200);
+	blink13(200);	
 }
 
 int main(void)
