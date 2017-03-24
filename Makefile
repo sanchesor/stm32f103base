@@ -2,6 +2,7 @@
 # stm32 (stm32f103c8t6) minimal example Makefile 
 ##################################
 
+.PHONY: all clean install
 
 # directories 
 
@@ -18,6 +19,7 @@ CMSIS_SRC_DIR = lib\CMSIS
 
 INCLUDES = -I$(CMSIS_SRC_DIR) -I$(LIB_INC_DIR)
 SYSTEM_LIBS = -L"C:\Program Files\SysGCC\arm-eabi\arm-eabi\lib" -L"C:\Program Files\SysGCC\arm-eabi\lib\gcc\arm-eabi\5.2.0"
+
 
 # tool
 CC = arm-eabi-gcc
@@ -37,9 +39,13 @@ COMMON_OBJS = \
 $(BIN_DIR)\startup_stm32f10x_md.o \
 $(BIN_DIR)\system_stm32f10x.o 
 
-$(BIN_DIR)\startup_stm32f10x_md.o: $(CMSIS_SRC_DIR)\startup_stm32f10x_md.S
+$(BIN_DIR):
+	if not exist $(BIN_DIR) mkdir $(BIN_DIR)
+
+$(BIN_DIR)\startup_stm32f10x_md.o: $(CMSIS_SRC_DIR)\startup_stm32f10x_md.S | $(BIN_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN_DIR)\startup_stm32f10x_md.o $(CMSIS_SRC_DIR)\startup_stm32f10x_md.S
-$(BIN_DIR)\system_stm32f10x.o: $(CMSIS_SRC_DIR)\system_stm32f10x.c
+	
+$(BIN_DIR)\system_stm32f10x.o: $(CMSIS_SRC_DIR)\system_stm32f10x.c | $(BIN_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN_DIR)\system_stm32f10x.o $(CMSIS_SRC_DIR)\system_stm32f10x.c
 	
 	
@@ -51,25 +57,30 @@ _TMP_SLASH_LIB_OBJS = $(patsubst $(LIB_SRC_DIR)/%.c,$(LIB_BIN_DIR)/%.o,$(_TMP_SL
 LIB_SRCS = $(subst /,\,$(_TMP_SLASH_LIB_SRCS))
 LIB_OBJS = $(subst /,\,$(_TMP_SLASH_LIB_OBJS))
 
- 
-$(LIB_OBJS): $(LIB_BIN_DIR)\\%.o: $(LIB_SRC_DIR)\\%.c
+
+$(LIB_BIN_DIR):
+	if not exist $(LIB_BIN_DIR) mkdir $(LIB_BIN_DIR)
+	
+$(LIB_OBJS): $(LIB_BIN_DIR)\\%.o: $(LIB_SRC_DIR)\\%.c | $(LIB_BIN_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $<
 
 # src
 
-$(BIN_DIR)\main.elf: $(BIN_DIR)\main.o $(COMMON_OBJS) $(LIB_OBJS)
+$(BIN_DIR)\main.elf: $(BIN_DIR)\main.o $(COMMON_OBJS) $(LIB_OBJS) | $(BIN_DIR)
 	$(CC) $(LFLAGS) -o $(BIN_DIR)\main.elf $(BIN_DIR)\main.o $(COMMON_OBJS) $(LIB_OBJS)
 
 
-$(BIN_DIR)\main.o: $(SRC_DIR)\main.c 
+$(BIN_DIR)\main.o: $(SRC_DIR)\main.c | $(BIN_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN_DIR)\main.o $(SRC_DIR)\main.c 
 	
-	
+
 	
 clean:
 	if exist $(BIN_DIR)\*.o del $(BIN_DIR)\*.o 
 	if exist $(BIN_DIR)\*.elf del $(BIN_DIR)\*.elf	
 	if exist $(LIB_BIN_DIR)\*.o del $(LIB_BIN_DIR)\*.o 
+	if exist $(BIN_DIR) rmdir $(BIN_DIR) /s /q
+	if exist $(LIB_BIN_DIR) rmdir $(LIB_BIN_DIR) /s /q
  
 
 
