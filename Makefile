@@ -85,11 +85,11 @@ clean:
 
 
 IMAGE = $(BIN_DIR)\\main.elf
-OPENOCD_DIR = C:\Program Files\OpenOCD-20160901
+OPENOCD_DIR = f:\download\openocd-0.10.0
 OPENOCD_PROGRAM = "$(OPENOCD_DIR)\bin\openocd.exe"
-OPENOCD_SCRIPTS = -s "$(OPENOCD_DIR)\tcl" -s "$(OPENOCD_DIR)\tcl\interface"
+OPENOCD_SCRIPTS = -s "$(OPENOCD_DIR)\scripts\interface" -s "$(OPENOCD_DIR)\scripts\target"
 install: 
-	 $(OPENOCD_PROGRAM) $(OPENOCD_SCRIPTS) -f "stlink-v2.cfg" -f "stm32f1x.cfg" -c init -c "reset halt" -c "flash write_image erase $(IMAGE)" -c "verify_image $(IMAGE)" -c "reset" -c shutdown
+	$(OPENOCD_PROGRAM) $(OPENOCD_SCRIPTS) -f "stlink-v2.cfg" -f "stm32f1x.cfg" -c init -c "reset halt" -c "flash write_image erase $(IMAGE)" -c "verify_image $(IMAGE)" -c "reset" -c shutdown
 	 
 	 
 	 
