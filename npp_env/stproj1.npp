@@ -63,11 +63,6 @@
                 </Folder>
             </Folder>
         </Folder>
-        <Folder name="npp_env">
-            <File name="npes_saved.txt" />
-            <File name="runmake.bat" />
-            <File name="stproj1.npp" />
-        </Folder>
         <Folder name="src">
             <File name="F:\hotep\SystemWorkbench\workspace\stproj1\master\src\main.c" />
         </Folder>
